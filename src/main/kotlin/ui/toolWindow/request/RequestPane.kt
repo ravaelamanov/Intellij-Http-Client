@@ -7,7 +7,9 @@ import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
 import services.HttpRequestSenderService
 import services.persistence.RequestPanePersistenceService
+import services.persistence.ResponsePanePersistenceService
 import ui.toolWindow.TabbedPaneList
+import ui.toolWindow.response.ResponsePane
 import java.awt.event.ItemEvent
 import javax.swing.JComboBox
 import javax.swing.JComponent
@@ -73,6 +75,7 @@ class RequestPane : JComponent() {
                 urlTextField()
                 button("SEND") {
                     service<HttpRequestSenderService<String>>().send()
+                    ResponsePane.setBodyText(ResponsePanePersistenceService.instance.objState.body)
                 }
             }
         }
