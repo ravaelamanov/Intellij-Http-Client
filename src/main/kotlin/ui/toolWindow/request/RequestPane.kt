@@ -3,6 +3,7 @@ package ui.toolWindow.request
 import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.CollectionComboBoxModel
+import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
 import services.HttpRequestSenderService
 import services.persistence.RequestPanePersistenceService
@@ -10,16 +11,18 @@ import ui.toolWindow.TabbedPaneList
 import java.awt.event.ItemEvent
 import javax.swing.JComboBox
 import javax.swing.JComponent
+import javax.swing.JPanel
 import javax.swing.JTabbedPane
 import javax.swing.JTextField
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
-
 class RequestPane : JComponent() {
     companion object {
         private const val COLUMNS_NUMBER: Int = 20
     }
+
+    private var requestTabbedPane: JTabbedPane = JTabbedPane()
     private val tabbedPanes = TabbedPaneList()
     val urlTextField = JTextField("google", COLUMNS_NUMBER)
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
@@ -58,14 +61,21 @@ class RequestPane : JComponent() {
     fun createRequestPane(): DialogPanel = panel(title = "REQUEST") {
         comboBoxListener()
         textFieldUpdate()
+        requestTabbedPane.addTab(tabbedPanes.listOfPanes[0], JPanel())
+        requestTabbedPane.addTab(tabbedPanes.listOfPanes[1], JPanel())
+        requestTabbedPane.addTab(tabbedPanes.listOfPanes[2], JPanel())
+        requestTabbedPane.addTab(tabbedPanes.listOfPanes[3], JPanel())
         row {
             cell {
                 methodsComboBox()
                 urlTextField()
                 button("SEND") {
-
+                    service<HttpRequestSenderService<String>>().send()
                 }
             }
+        }
+        row {
+            requestTabbedPane().constraints(CCFlags.grow)
         }
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.JSplitPane
 class CreatePane : JComponent() {
     var requestPane = RequestPane()
     var splitPane = JSplitPane(
-        JSplitPane.VERTICAL_SPLIT,  requestPane.createRequestPane(), JPanel()
+        JSplitPane.VERTICAL_SPLIT, requestPane.createRequestPane(), JPanel()
     )
     init {
         splitPane.resizeWeight = DIVIDE_PROPORTION
