@@ -25,6 +25,7 @@ class RequestPane : JComponent() {
     private var requestTabbedPane: JTabbedPane = JTabbedPane()
     private val paramsRequestPane = ParamsRequestPane().createPanel()
     private val headersRequestPane = HeadersRequestPane().createPanel()
+    private val bodyRequestPane = BodyRequestPane().createPanel()
     private val tabbedPanes = TabbedPaneList()
     val urlTextField = JTextField("google", COLUMNS_NUMBER)
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
@@ -65,8 +66,7 @@ class RequestPane : JComponent() {
         textFieldUpdate()
         requestTabbedPane.addTab(tabbedPanes.listOfPanes[0], paramsRequestPane)
         requestTabbedPane.addTab(tabbedPanes.listOfPanes[1], headersRequestPane)
-        requestTabbedPane.addTab(tabbedPanes.listOfPanes[2], JPanel())
-        requestTabbedPane.addTab(tabbedPanes.listOfPanes[3], JPanel())
+        requestTabbedPane.addTab(tabbedPanes.listOfPanes[2], bodyRequestPane)
         row {
             cell {
                 methodsComboBox()
