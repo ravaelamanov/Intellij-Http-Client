@@ -10,5 +10,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceInterface="services.HttpRequestSenderService"
                             serviceImplementation="services.impl.HttpRequestSenderServiceImpl"/>
+        <toolWindow id="Http-client" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+                    factoryClass="ui.toolWindow.DeclarativeToolWindowFactory"/>
     </extensions>
 </idea-plugin>
