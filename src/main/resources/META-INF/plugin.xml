@@ -8,5 +8,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Http-client" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+                    factoryClass="ui.toolWindow.DeclarativeToolWindowFactory"/>
     </extensions>
 </idea-plugin>
