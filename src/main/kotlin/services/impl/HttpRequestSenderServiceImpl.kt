@@ -5,7 +5,6 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-
 class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
 
     override fun send(): HttpResponse<String> {
@@ -21,6 +20,7 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
     }
 
     private fun persistResponse(httpResponse: HttpResponse<String>) {
+        print(httpResponse)
         TODO()
     }
 }
