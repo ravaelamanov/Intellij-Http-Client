@@ -3,14 +3,17 @@ package services.impl
 import services.HttpRequestSenderService
 import services.extensions.addParameter
 import services.persistence.RequestPanePersistenceService
+import services.persistence.ResponsePanePersistenceService
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
+import java.util.Vector
 
 class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
 
     private val requestPaneState = RequestPanePersistenceService.instance.objState
+    private val responsePaneState = ResponsePanePersistenceService.instance.objState
 
     override fun send(): HttpResponse<String> {
         val httpClient = HttpClient.newBuilder().build()
@@ -23,7 +26,7 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
     private fun buildRequestFromUI(): HttpRequest {
         var uri = URI(requestPaneState.url.trim())
         requestPaneState.parametersKeyValueTable.forEach { uri = uri.addParameter(it[0] ?: "", it[1] ?: "") }
-        val filteredHeaders = requestPaneState.headersKeyValueTable.filterNot { it[0] == null || it [0] == "" }
+        val filteredHeaders = requestPaneState.headersKeyValueTable.filterNot { it[0] == null || it[0] == "" }
         val requestBuilder = HttpRequest.newBuilder()
         if (filteredHeaders.isNotEmpty()) {
             requestBuilder.headers(*filteredHeaders.flatMap { it.toList() }.toTypedArray())
@@ -38,7 +41,15 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
     }
 
     private fun persistResponse(httpResponse: HttpResponse<String>) {
-        print(httpResponse)
-        TODO()
+        responsePaneState.body = httpResponse.body()
+        responsePaneState.headersKeyValueTable.removeAllElements()
+        httpResponse.headers().map().forEach { key, values ->
+            values.forEach { value ->
+                val vectorToAdd = Vector<String>(2)
+                vectorToAdd.add(key)
+                vectorToAdd.add(value)
+                responsePaneState.headersKeyValueTable.add(vectorToAdd)
+            }
+        }
     }
 }
