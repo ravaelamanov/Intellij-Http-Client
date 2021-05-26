@@ -14,11 +14,13 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
 
     private val requestPaneState = RequestPanePersistenceService.instance.objState
     private val responsePaneState = ResponsePanePersistenceService.instance.objState
+    private val authenticationProvider = requestPaneState.auth.provider
 
     override fun send(): HttpResponse<String> {
         val httpClient = HttpClient.newBuilder().build()
         val httpRequest = buildRequestFromUI()
-        val httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString())
+        val authenticatedHttpRequest = authenticationProvider.authenticate(httpRequest)
+        val httpResponse = httpClient.send(authenticatedHttpRequest, HttpResponse.BodyHandlers.ofString())
         persistResponse(httpResponse)
         return httpResponse
     }

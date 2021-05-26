@@ -5,6 +5,7 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.service
 import com.intellij.util.xmlb.annotations.OptionTag
+import services.auth.AuthenticationProvider
 import services.persistence.converters.VectorConverter
 import java.util.Vector
 
@@ -24,7 +25,7 @@ class RequestPanePersistenceService : AbstractPersistenceService<RequestPanePers
         @OptionTag(converter = VectorConverter::class)
         var headersKeyValueTable: Vector<Vector<String>> = Vector(1)
         var body: String = ""
-        var authTest = "NoAuth"
+        var auth = AuthenticationProvider.Strategies.No_Auth
 
         init {
             parametersKeyValueTable.add(Vector(2))
