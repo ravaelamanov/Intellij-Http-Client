@@ -13,7 +13,6 @@ import ui.toolWindow.response.ResponsePane
 import java.awt.event.ItemEvent
 import javax.swing.JComboBox
 import javax.swing.JComponent
-import javax.swing.JPanel
 import javax.swing.JTabbedPane
 import javax.swing.JTextField
 import javax.swing.event.DocumentEvent
@@ -29,7 +28,7 @@ class RequestPane : JComponent() {
     private val headersRequestPane = HeadersRequestPane().createPanel()
     private val bodyRequestPane = BodyRequestPane().createPanel()
     private val tabbedPanes = TabbedPaneList()
-    val urlTextField = JTextField("google", COLUMNS_NUMBER)
+    val urlTextField = JTextField(RequestPanePersistenceService.instance.objState.url, COLUMNS_NUMBER)
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
     private val selection = if (savedSelection.isEmpty()) tabbedPanes.methodsList.first() else savedSelection
     val comboBoxModel = CollectionComboBoxModel(tabbedPanes.methodsList, selection)
