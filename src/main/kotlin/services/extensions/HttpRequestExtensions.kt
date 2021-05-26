@@ -1,16 +1,17 @@
 package services.extensions
 
+import java.net.http.HttpClient
 import java.net.http.HttpRequest
 
 fun HttpRequest.currentBuilder(): HttpRequest.Builder {
     val currentBuilder = HttpRequest.newBuilder()
+    val headersArray = headers().map().toArray()
+    if (headersArray.isNotEmpty()) {
+        currentBuilder.headers(*headersArray)
+    }
     return currentBuilder
-        .method(method(), bodyPublisher().orElse(null))
+        .method(method(), bodyPublisher()?.get() ?: HttpRequest.BodyPublishers.ofString(""))
         .expectContinue(expectContinue())
-        .timeout(timeout().orElse(null))
         .uri(uri())
-        .version(version().orElse(null))
-        .headers(
-            *headers().map().toArray()
-        )
+        .version(version()?.get() ?: HttpClient.Version.HTTP_1_1)
 }
