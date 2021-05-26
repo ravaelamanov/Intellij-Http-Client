@@ -20,6 +20,7 @@ class ResponsePanePersistenceService : AbstractPersistenceService<ResponsePanePe
         var body: String = ""
         @OptionTag(converter = VectorConverter::class)
         var headersKeyValueTable: Vector<Vector<String>> = Vector(1)
+        var statusCode: String = ""
     }
 
     override var objState = State()

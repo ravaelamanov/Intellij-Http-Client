@@ -54,5 +54,6 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
                 responsePaneState.headersKeyValueTable.add(vectorToAdd)
             }
         }
+        responsePaneState.statusCode = httpResponse.headers().firstValue(":status").orElse("N/A")
     }
 }
