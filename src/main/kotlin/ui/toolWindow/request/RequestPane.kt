@@ -73,8 +73,9 @@ class RequestPane : JComponent() {
                 methodsComboBox()
                 urlTextField()
                 button("SEND") {
-                    service<HttpRequestSenderService<String>>().send()
+                    val response = service<HttpRequestSenderService<String>>().send()
                     ResponsePane.setBodyText(ResponsePanePersistenceService.instance.objState.body)
+                    ResponsePane.setStatusCode(ResponsePanePersistenceService.instance.objState.statusCode)
                 }
             }
         }
