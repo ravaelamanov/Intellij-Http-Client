@@ -75,7 +75,7 @@ class RequestPane : JComponent() {
                 button("SEND") {
                     val response = service<HttpRequestSenderService<String>>().send()
                     ResponsePane.setBodyText(ResponsePanePersistenceService.instance.objState.body)
-                    ResponsePane.setStatusCode(response.headers().firstValue(":status").orElse("N/A"))
+                    ResponsePane.setStatusCode(ResponsePanePersistenceService.instance.objState.statusCode)
                 }
             }
         }
