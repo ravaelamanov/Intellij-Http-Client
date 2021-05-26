@@ -4,8 +4,8 @@ import ui.toolWindow.request.authentication.BasicPane
 import javax.swing.JComponent
 import javax.swing.JSplitPane
 
-class MainAuthPane : JComponent() {
-    var authTypes = AuthChoices()
+class MainAuth : JComponent() {
+    var authTypes = AuthChoicesPane()
     var leftPane = authTypes.createPanel()
     var noAuth = NoAuthPane().createPanel()
     var basic = BasicPane().createPanel()

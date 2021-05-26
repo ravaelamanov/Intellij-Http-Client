@@ -8,7 +8,7 @@ import ui.toolWindow.request.RequestTabbedPane
 import javax.swing.JComboBox
 import javax.swing.JComponent
 
-class AuthChoices : RequestTabbedPane, JComponent() {
+class AuthChoicesPane : RequestTabbedPane, JComponent() {
     val comboBoxModel = EnumComboBoxModel(AuthenticationProvider.Strategies::class.java)
     val authComboBox = JComboBox(comboBoxModel)
     override fun createPanel(): DialogPanel = panel() {
