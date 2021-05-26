@@ -9,6 +9,7 @@ import services.HttpRequestSenderService
 import services.persistence.RequestPanePersistenceService
 import services.persistence.ResponsePanePersistenceService
 import ui.toolWindow.TabbedPaneList
+import ui.toolWindow.request.auth.MainAuthPane
 import ui.toolWindow.response.ResponsePane
 import java.awt.event.ItemEvent
 import javax.swing.JComboBox
@@ -27,6 +28,7 @@ class RequestPane : JComponent() {
     private val paramsRequestPane = ParamsRequestPane().createPanel()
     private val headersRequestPane = HeadersRequestPane().createPanel()
     private val bodyRequestPane = BodyRequestPane().createPanel()
+    private val authRequestPane = MainAuthPane().createPanel()
     private val tabbedPanes = TabbedPaneList()
     val urlTextField = JTextField(RequestPanePersistenceService.instance.objState.url, COLUMNS_NUMBER)
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
@@ -65,9 +67,12 @@ class RequestPane : JComponent() {
     fun createRequestPane(): DialogPanel = panel(title = "REQUEST") {
         comboBoxListener()
         textFieldUpdate()
-        requestTabbedPane.addTab(tabbedPanes.listOfPanes[0], paramsRequestPane)
-        requestTabbedPane.addTab(tabbedPanes.listOfPanes[1], headersRequestPane)
-        requestTabbedPane.addTab(tabbedPanes.listOfPanes[2], bodyRequestPane)
+        with(requestTabbedPane) {
+            addTab(tabbedPanes.listOfPanes[0], paramsRequestPane)
+            addTab(tabbedPanes.listOfPanes[1], headersRequestPane)
+            addTab(tabbedPanes.listOfPanes[2], bodyRequestPane)
+            addTab(tabbedPanes.listOfPanes[3], authRequestPane)
+        }
         row {
             cell {
                 methodsComboBox()
