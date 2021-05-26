@@ -14,7 +14,7 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
 
     private val requestPaneState = RequestPanePersistenceService.instance.objState
     private val responsePaneState = ResponsePanePersistenceService.instance.objState
-    private val authenticationProvider = requestPaneState.auth.provider
+    private var authenticationProvider = requestPaneState.auth.provider
 
     override fun send(): HttpResponse<String> {
         val httpClient = HttpClient.newBuilder().build()
@@ -26,6 +26,7 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
     }
 
     private fun buildRequestFromUI(): HttpRequest {
+        authenticationProvider = requestPaneState.auth.provider
         var uri = URI(requestPaneState.url.trim())
         requestPaneState.parametersKeyValueTable.forEach { uri = uri.addParameter(it[0] ?: "", it[1] ?: "") }
         val filteredHeaders = requestPaneState.headersKeyValueTable.filterNot { it[0] == null || it[0] == "" }
