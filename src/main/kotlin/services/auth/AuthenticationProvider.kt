@@ -1,6 +1,7 @@
 package services.auth
 
 import services.auth.impl.BasicAuthenticationProvider
+import services.auth.impl.BearerAuthenticationProvider
 import services.auth.impl.NoAuthenticationProvider
 import java.net.http.HttpRequest
 
@@ -9,7 +10,8 @@ interface AuthenticationProvider {
 
     enum class Strategies(val provider: AuthenticationProvider) {
         No_Auth(NoAuthenticationProvider()),
-        Basic(BasicAuthenticationProvider());
+        Basic(BasicAuthenticationProvider()),
+        Bearer(BearerAuthenticationProvider());
 
         override fun toString(): String {
             return super.toString().replace('_', ' ')
