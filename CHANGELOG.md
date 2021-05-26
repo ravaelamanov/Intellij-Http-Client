@@ -3,5 +3,7 @@
 # Intellij-Http-Client Changelog
 
 ## [Unreleased]
+## [1.0.0] - 2021-05-26
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Send HTTP requests and observe responses.
+- HTTP request and response data is persisted between IDE start-ups.

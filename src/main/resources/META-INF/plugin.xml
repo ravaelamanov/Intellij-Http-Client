@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.ravaelamanov.intellijhttpclient</id>
-    <name>Intellij-Http-Client</name>
+    <name>Http-Client</name>
     <vendor>ravaelamanov</vendor>
 
     <!-- Product and plugin compatibility requirements -->
@@ -8,12 +8,9 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.ravaelamanov.intellijhttpclient.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.ravaelamanov.intellijhttpclient.services.MyProjectService"/>
+        <applicationService serviceInterface="services.HttpRequestSenderService"
+                            serviceImplementation="services.impl.HttpRequestSenderServiceImpl"/>
+        <toolWindow id="Http-client" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+                    factoryClass="ui.toolWindow.DeclarativeToolWindowFactory"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.ravaelamanov.intellijhttpclient.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
