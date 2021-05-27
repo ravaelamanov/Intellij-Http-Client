@@ -12,10 +12,13 @@ import ui.toolWindow.TabbedPaneList
 import ui.toolWindow.request.auth.MainAuth
 import ui.toolWindow.response.ResponsePane
 import java.awt.event.ItemEvent
+import java.io.FileInputStream
+import java.util.Properties
 import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JTabbedPane
 import javax.swing.JTextField
+import javax.swing.border.EmptyBorder
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
@@ -30,6 +33,9 @@ class RequestPane : JComponent() {
     private val bodyRequestPane = BodyRequestPane().createPanel()
     private val authRequestPane = MainAuth().createPanel()
     private val tabbedPanes = TabbedPaneList()
+    private val fis = FileInputStream(
+        "C:\\ifmo\\AppliedMath\\Intellij-Http-Client\\src\\main\\resources\\uiParameters.properties")
+    private val prop = Properties()
     val urlTextField = JTextField(RequestPanePersistenceService.instance.objState.url, COLUMNS_NUMBER)
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
     private val selection = if (savedSelection.isEmpty()) tabbedPanes.methodsList.first() else savedSelection
@@ -64,7 +70,8 @@ class RequestPane : JComponent() {
         })
     }
 
-    fun createRequestPane(): DialogPanel = panel(title = "REQUEST") {
+    fun createRequestPane(): DialogPanel = panel() {
+        prop.load(fis)
         comboBoxListener()
         textFieldUpdate()
         with(requestTabbedPane) {
@@ -87,5 +94,12 @@ class RequestPane : JComponent() {
         row {
             requestTabbedPane().constraints(CCFlags.grow)
         }
+    }.apply {
+        withBorder(EmptyBorder(
+            prop.getProperty("paddingTop").toInt(),
+            prop.getProperty("paddingLeft").toInt(),
+            prop.getProperty("paddingBottom").toInt(),
+            prop.getProperty("paddingRight").toInt())
+        )
     }
 }
