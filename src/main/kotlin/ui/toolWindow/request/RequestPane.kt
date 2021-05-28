@@ -11,9 +11,8 @@ import services.persistence.ResponsePanePersistenceService
 import ui.toolWindow.TabbedPaneList
 import ui.toolWindow.request.auth.MainAuth
 import ui.toolWindow.response.ResponsePane
+import ui.toolWindow.util.ResourceLoader
 import java.awt.event.ItemEvent
-import java.io.FileInputStream
-import java.util.Properties
 import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JTabbedPane
@@ -33,15 +32,15 @@ class RequestPane : JComponent() {
     private val bodyRequestPane = BodyRequestPane().createPanel()
     private val authRequestPane = MainAuth().createPanel()
     private val tabbedPanes = TabbedPaneList()
-    private val fis = FileInputStream(
-        "C:\\ifmo\\AppliedMath\\Intellij-Http-Client\\src\\main\\resources\\uiParameters.properties")
-    private val prop = Properties()
-    val urlTextField = JTextField(RequestPanePersistenceService.instance.objState.url, COLUMNS_NUMBER)
+    private val path = "uiParameters.properties"
+    private val properties = ResourceLoader.loadProperties<RequestPane>(path)
+    val urlTextField = JTextField(
+        RequestPanePersistenceService.instance.objState.url, properties.getProperty("columnsNumberURL").toInt()
+    )
     private val savedSelection = RequestPanePersistenceService.instance.objState.method
     private val selection = if (savedSelection.isEmpty()) tabbedPanes.methodsList.first() else savedSelection
     val comboBoxModel = CollectionComboBoxModel(tabbedPanes.methodsList, selection)
     val methodsComboBox = JComboBox(comboBoxModel)
-
     private fun comboBoxListener() {
         methodsComboBox.addItemListener() {
             if (it.stateChange == ItemEvent.SELECTED) {
@@ -71,7 +70,6 @@ class RequestPane : JComponent() {
     }
 
     fun createRequestPane(): DialogPanel = panel() {
-        prop.load(fis)
         comboBoxListener()
         textFieldUpdate()
         with(requestTabbedPane) {
@@ -96,10 +94,10 @@ class RequestPane : JComponent() {
         }
     }.apply {
         withBorder(EmptyBorder(
-            prop.getProperty("paddingTop").toInt(),
-            prop.getProperty("paddingLeft").toInt(),
-            prop.getProperty("paddingBottom").toInt(),
-            prop.getProperty("paddingRight").toInt())
+            properties.getProperty("paddingTop").toInt(),
+            properties.getProperty("paddingLeft").toInt(),
+            properties.getProperty("paddingBottom").toInt(),
+            properties.getProperty("paddingRight").toInt())
         )
     }
 }
