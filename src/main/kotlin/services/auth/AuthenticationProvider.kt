@@ -12,6 +12,11 @@ interface AuthenticationProvider {
         No_Auth(NoAuthenticationProvider()),
         Basic(BasicAuthenticationProvider()),
         Bearer(BearerAuthenticationProvider());
+        companion object {
+            fun fromString(value: String): Strategy {
+                return valueOf(value.replace(' ', '_'))
+            }
+        }
 
         override fun toString(): String {
             return super.toString().replace('_', ' ')
