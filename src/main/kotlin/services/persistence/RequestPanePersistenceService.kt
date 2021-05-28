@@ -39,7 +39,11 @@ class RequestPanePersistenceService : AbstractPersistenceService<RequestPanePers
 
         @OptionTag(converter = DocumentConverter::class)
         var body: Document = plainDocumentOfGapContent("")
-        var auth = AuthenticationProvider.Strategies.No_Auth
+
+        @OptionTag(converter = StrategiesComboBoxModelConverter::class)
+        var auths: ComboBoxModel<AuthenticationProvider.Strategy> = EnumComboBoxModel(
+            AuthenticationProvider.Strategy::class.java
+        )
 
         init {
             parametersKeyValueTable.add(Vector(2))
