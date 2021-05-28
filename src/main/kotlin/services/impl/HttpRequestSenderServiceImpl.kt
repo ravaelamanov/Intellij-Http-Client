@@ -1,7 +1,10 @@
 package services.impl
 
 import services.HttpRequestSenderService
+import services.auth.AuthenticationProvider
 import services.extensions.addParameter
+import services.extensions.allText
+import services.extensions.setText
 import services.persistence.RequestPanePersistenceService
 import services.persistence.ResponsePanePersistenceService
 import java.net.URI
@@ -56,6 +59,6 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
                 responsePaneState.headersKeyValueTable.add(vectorToAdd)
             }
         }
-        responsePaneState.statusCode = httpResponse.statusCode().toString()
+        responsePaneState.statusCode.setText(httpResponse.statusCode().toString())
     }
 }
