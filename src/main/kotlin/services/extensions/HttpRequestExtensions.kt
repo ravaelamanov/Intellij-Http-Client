@@ -1,6 +1,5 @@
 package services.extensions
 
-import java.net.http.HttpClient
 import java.net.http.HttpRequest
 
 fun HttpRequest.currentBuilder(): HttpRequest.Builder {
@@ -10,8 +9,8 @@ fun HttpRequest.currentBuilder(): HttpRequest.Builder {
         currentBuilder.headers(*headersArray)
     }
     return currentBuilder
-        .method(method(), bodyPublisher()?.get() ?: HttpRequest.BodyPublishers.ofString(""))
+        .method(method(), bodyPublisher().orElse(HttpRequest.BodyPublishers.noBody()))
         .expectContinue(expectContinue())
         .uri(uri())
-        .version(version()?.get() ?: HttpClient.Version.HTTP_1_1)
+//        .version(version().orElse(HttpClient.Version.HTTP_1_1))
 }
