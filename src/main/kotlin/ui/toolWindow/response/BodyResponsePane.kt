@@ -8,13 +8,10 @@ import javax.swing.JTextArea
 
 class BodyResponsePane : ResponseTabbedPane, JComponent() {
     companion object BodyText {
-        private val responseText = ResponsePanePersistenceService.instance.objState.body
-        private val bodyJTextArea: JTextArea = JTextArea(responseText)
-        fun setBodyJTextArea(bodyText: String) {
-            bodyJTextArea.text = bodyText
-        }
+        private val responseDocument = ResponsePanePersistenceService.instance.objState.body
+        private val bodyJTextArea: JTextArea = JTextArea(responseDocument)
     }
-    override fun createPanel(): DialogPanel = panel() {
+    override fun createPanel(): DialogPanel = panel {
         bodyJTextArea.isEditable = false
         row {
             scrollPane(bodyJTextArea).constraints(pushX)

@@ -10,3 +10,4 @@ formatting:
 build:
   weights:
     SpreadOperator: 0
+    MagicNumber: 0
