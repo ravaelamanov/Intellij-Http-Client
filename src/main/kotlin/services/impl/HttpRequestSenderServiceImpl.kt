@@ -14,11 +14,11 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
 
     private val requestPaneState = RequestPanePersistenceService.instance.objState
     private val responsePaneState = ResponsePanePersistenceService.instance.objState
-    private var authenticationProvider = requestPaneState.auth.provider
 
     override fun send(): HttpResponse<String> {
         val httpClient = HttpClient.newBuilder().build()
         val httpRequest = buildRequestFromUI()
+        val authenticationProvider = (requestPaneState.auths.selectedItem as AuthenticationProvider.Strategy).provider
         val authenticatedHttpRequest = authenticationProvider.authenticate(httpRequest)
         val httpResponse = httpClient.send(authenticatedHttpRequest, HttpResponse.BodyHandlers.ofString())
         persistResponse(httpResponse)
@@ -26,8 +26,10 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
     }
 
     private fun buildRequestFromUI(): HttpRequest {
-        authenticationProvider = requestPaneState.auth.provider
-        var uri = URI(requestPaneState.url.trim())
+        val method = requestPaneState.methods.selectedItem as String
+        val body = requestPaneState.body.allText()
+        val url = requestPaneState.url.allText()
+        var uri = URI(url.trim())
         requestPaneState.parametersKeyValueTable.forEach { uri = uri.addParameter(it[0] ?: "", it[1] ?: "") }
         val filteredHeaders = requestPaneState.headersKeyValueTable.filterNot { it[0] == null || it[0] == "" }
         val requestBuilder = HttpRequest.newBuilder()
@@ -36,15 +38,15 @@ class HttpRequestSenderServiceImpl : HttpRequestSenderService<String> {
         }
         return requestBuilder
             .method(
-                requestPaneState.method.toUpperCase(),
-                HttpRequest.BodyPublishers.ofString(requestPaneState.body)
+                method.toUpperCase(),
+                HttpRequest.BodyPublishers.ofString(body)
             )
             .uri(uri)
             .build()
     }
 
     private fun persistResponse(httpResponse: HttpResponse<String>) {
-        responsePaneState.body = httpResponse.body()
+        responsePaneState.body.setText(httpResponse.body())
         responsePaneState.headersKeyValueTable.removeAllElements()
         httpResponse.headers().map().forEach { key, values ->
             values.forEach { value ->
