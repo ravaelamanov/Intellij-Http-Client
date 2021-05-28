@@ -29,9 +29,13 @@ class ResponsePane : JComponent() {
 
         fun createResponsePane(): DialogPanel = panel() {
             responseTabbedPane.addTab(
-                tabbedPanes.listOfPanes[2], bodyResponsePane)
+                tabbedPanes.listOfPanes[2],
+                bodyResponsePane
+            )
             responseTabbedPane.addTab(
-                tabbedPanes.listOfPanes[1], headersResponsePane)
+                tabbedPanes.listOfPanes[1],
+                headersResponsePane
+            )
             statusCode.isEditable = false
             row {
                 responseTabbedPane().constraints(CCFlags.grow)
@@ -41,11 +45,13 @@ class ResponsePane : JComponent() {
                 statusCode().constraints(CCFlags.growY)
             }
         }.apply {
-            withBorder(EmptyBorder(
-                UIProperties.getProperty("paddingTop").toInt(),
-                UIProperties.getProperty("paddingLeft").toInt(),
-                UIProperties.getProperty("paddingBottom").toInt(),
-                UIProperties.getProperty("paddingRight").toInt())
+            withBorder(
+                EmptyBorder(
+                    UIProperties.getProperty("paddingTop").toInt(),
+                    UIProperties.getProperty("paddingLeft").toInt(),
+                    UIProperties.getProperty("paddingBottom").toInt(),
+                    UIProperties.getProperty("paddingRight").toInt()
+                )
             )
         }
     }
