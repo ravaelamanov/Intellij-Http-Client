@@ -2,7 +2,6 @@ package ui.toolWindow.request.auth
 
 import com.intellij.openapi.ui.DialogPanel
 import services.auth.AuthenticationProvider
-import ui.toolWindow.request.authentication.BasicPane
 import java.awt.event.ItemEvent
 import javax.swing.JComponent
 import javax.swing.JSplitPane

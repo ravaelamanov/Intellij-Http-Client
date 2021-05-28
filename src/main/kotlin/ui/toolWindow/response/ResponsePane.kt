@@ -7,15 +7,13 @@ import com.intellij.ui.layout.panel
 import services.extensions.allText
 import services.persistence.ResponsePanePersistenceService
 import ui.toolWindow.TabbedPaneList
-import ui.toolWindow.util.ResourceLoader
+import ui.toolWindow.util.UIProperties
 import javax.swing.JComponent
 import javax.swing.JTextField
 import javax.swing.border.EmptyBorder
 
 class ResponsePane : JComponent() {
     companion object {
-        private const val path = "uiParameters.properties"
-        private val properties = ResourceLoader.loadProperties<ResponsePane>(path)
         private var responseTabbedPane: JBTabbedPane = JBTabbedPane()
         private var bodyResponsePane = BodyResponsePane().createPanel()
         private var headersResponsePane = HeadersResponsePane().createPanel()
@@ -24,7 +22,7 @@ class ResponsePane : JComponent() {
         private val statusCode = JTextField(
             objState.statusCode,
             objState.statusCode.allText(),
-            properties.getProperty(
+            UIProperties.getProperty(
                 "columnsNumberStatusCode"
             ).toInt()
         )
@@ -44,10 +42,10 @@ class ResponsePane : JComponent() {
             }
         }.apply {
             withBorder(EmptyBorder(
-                properties.getProperty("paddingTop").toInt(),
-                properties.getProperty("paddingLeft").toInt(),
-                properties.getProperty("paddingBottom").toInt(),
-                properties.getProperty("paddingRight").toInt())
+                UIProperties.getProperty("paddingTop").toInt(),
+                UIProperties.getProperty("paddingLeft").toInt(),
+                UIProperties.getProperty("paddingBottom").toInt(),
+                UIProperties.getProperty("paddingRight").toInt())
             )
         }
     }

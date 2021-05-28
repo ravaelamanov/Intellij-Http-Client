@@ -9,7 +9,7 @@ import services.extensions.allText
 import services.persistence.RequestPanePersistenceService
 import ui.toolWindow.TabbedPaneList
 import ui.toolWindow.request.auth.MainAuth
-import ui.toolWindow.util.ResourceLoader
+import ui.toolWindow.util.UIProperties
 import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JTabbedPane
@@ -24,12 +24,10 @@ class RequestPane : JComponent() {
     private val bodyRequestPane = BodyRequestPane().createPanel()
     private val authRequestPane = MainAuth().createPanel()
     private val tabbedPanes = TabbedPaneList()
-    private val path = "uiParameters.properties"
-    private val properties = ResourceLoader.loadProperties<RequestPane>(path)
     private val urlTextField = JTextField(
         objState.url,
         objState.url.allText(),
-        properties.getProperty("columnsNumberURL").toInt()
+        UIProperties.getProperty("columnsNumberURL").toInt()
     )
     private val methodsComboBox = JComboBox(objState.methods)
 
@@ -55,10 +53,10 @@ class RequestPane : JComponent() {
     }.apply {
         withBorder(
             EmptyBorder(
-                properties.getProperty("paddingTop").toInt(),
-                properties.getProperty("paddingLeft").toInt(),
-                properties.getProperty("paddingBottom").toInt(),
-                properties.getProperty("paddingRight").toInt()
+                UIProperties.getProperty("paddingTop").toInt(),
+                UIProperties.getProperty("paddingLeft").toInt(),
+                UIProperties.getProperty("paddingBottom").toInt(),
+                UIProperties.getProperty("paddingRight").toInt()
             )
         )
     }
