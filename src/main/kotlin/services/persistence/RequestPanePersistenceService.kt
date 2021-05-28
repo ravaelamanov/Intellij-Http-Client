@@ -4,11 +4,16 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.service
+import com.intellij.ui.CollectionComboBoxModel
+import com.intellij.ui.EnumComboBoxModel
 import com.intellij.util.xmlb.annotations.OptionTag
 import services.auth.AuthenticationProvider
 import services.persistence.converters.DocumentConverter
+import services.persistence.converters.MethodsComboBoxModelConverter
+import services.persistence.converters.StrategiesComboBoxModelConverter
 import services.persistence.converters.VectorConverter
 import java.util.Vector
+import javax.swing.ComboBoxModel
 import javax.swing.text.Document
 
 @Service
@@ -20,8 +25,8 @@ class RequestPanePersistenceService : AbstractPersistenceService<RequestPanePers
     }
 
     class State {
-        @OptionTag(converter = DocumentConverter::class)
-        var method: Document = plainDocumentOfGapContent("GET")
+        @OptionTag(converter = MethodsComboBoxModelConverter::class)
+        var methods: ComboBoxModel<String> = CollectionComboBoxModel(methodsList)
 
         @OptionTag(converter = DocumentConverter::class)
         var url: Document = plainDocumentOfGapContent("")
