@@ -22,10 +22,6 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
 class RequestPane : JComponent() {
-    companion object {
-        private const val COLUMNS_NUMBER: Int = 20
-    }
-
     private var requestTabbedPane: JTabbedPane = JTabbedPane()
     private val paramsRequestPane = ParamsRequestPane().createPanel()
     private val headersRequestPane = HeadersRequestPane().createPanel()
@@ -83,7 +79,7 @@ class RequestPane : JComponent() {
                 methodsComboBox()
                 urlTextField()
                 button("SEND") {
-                    val response = service<HttpRequestSenderService<String>>().send()
+                    service<HttpRequestSenderService<String>>().send()
                     ResponsePane.setBodyText(ResponsePanePersistenceService.instance.objState.body)
                     ResponsePane.setStatusCode(ResponsePanePersistenceService.instance.objState.statusCode)
                 }
@@ -93,11 +89,13 @@ class RequestPane : JComponent() {
             requestTabbedPane().constraints(CCFlags.grow)
         }
     }.apply {
-        withBorder(EmptyBorder(
-            properties.getProperty("paddingTop").toInt(),
-            properties.getProperty("paddingLeft").toInt(),
-            properties.getProperty("paddingBottom").toInt(),
-            properties.getProperty("paddingRight").toInt())
+        withBorder(
+            EmptyBorder(
+                properties.getProperty("paddingTop").toInt(),
+                properties.getProperty("paddingLeft").toInt(),
+                properties.getProperty("paddingBottom").toInt(),
+                properties.getProperty("paddingRight").toInt()
+            )
         )
     }
 }
