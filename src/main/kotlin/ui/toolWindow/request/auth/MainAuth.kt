@@ -1,7 +1,6 @@
 package ui.toolWindow.request.auth
 
 import com.intellij.openapi.ui.DialogPanel
-import com.sun.java.accessibility.util.AWTEventMonitor.addItemListener
 import services.auth.AuthenticationProvider
 import ui.toolWindow.request.authentication.BasicPane
 import java.awt.event.ItemEvent
@@ -28,20 +27,20 @@ class MainAuth : JComponent() {
     init {
         splitPane.orientation = JSplitPane.HORIZONTAL_SPLIT
         splitPane.resizeWeight = DIVIDE_PROPORTION
-        splitPane.rightComponent = when (authTypes.comboBoxModel.selectedItem) {
-            AuthenticationProvider.Strategies.No_Auth -> noAuth
-            AuthenticationProvider.Strategies.Basic -> basic
-            AuthenticationProvider.Strategies.Bearer -> bearer
+        splitPane.rightComponent = when (authTypes.authComboBox.selectedItem) {
+            AuthenticationProvider.Strategy.No_Auth -> noAuth
+            AuthenticationProvider.Strategy.Basic -> basic
+            AuthenticationProvider.Strategy.Bearer -> bearer
             else -> noAuth
         }
         splitPane.leftComponent = leftPane
         authTypes.authComboBox.apply {
             addItemListener {
                 if (it.stateChange == ItemEvent.SELECTED) {
-                    when (authTypes.comboBoxModel.selectedItem) {
-                        AuthenticationProvider.Strategies.No_Auth -> changeSplitPane(noAuth)
-                        AuthenticationProvider.Strategies.Basic -> changeSplitPane(basic)
-                        AuthenticationProvider.Strategies.Bearer -> changeSplitPane(bearer)
+                    when (authTypes.authComboBox.selectedItem) {
+                        AuthenticationProvider.Strategy.No_Auth -> changeSplitPane(noAuth)
+                        AuthenticationProvider.Strategy.Basic -> changeSplitPane(basic)
+                        AuthenticationProvider.Strategy.Bearer -> changeSplitPane(bearer)
                         else -> {}
                     }
                 }

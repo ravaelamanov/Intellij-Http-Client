@@ -4,6 +4,7 @@ import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.components.JBTabbedPane
 import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
+import services.extensions.allText
 import services.persistence.ResponsePanePersistenceService
 import ui.toolWindow.TabbedPaneList
 import ui.toolWindow.util.ResourceLoader
@@ -19,8 +20,11 @@ class ResponsePane : JComponent() {
         private var bodyResponsePane = BodyResponsePane().createPanel()
         private var headersResponsePane = HeadersResponsePane().createPanel()
         private val tabbedPanes = TabbedPaneList()
+        private val objState = ResponsePanePersistenceService.instance.objState
         private val statusCode = JTextField(
-            ResponsePanePersistenceService.instance.objState.statusCode, properties.getProperty(
+            objState.statusCode,
+            objState.statusCode.allText(),
+            properties.getProperty(
                 "columnsNumberStatusCode"
             ).toInt()
         )
@@ -45,14 +49,6 @@ class ResponsePane : JComponent() {
                 properties.getProperty("paddingBottom").toInt(),
                 properties.getProperty("paddingRight").toInt())
             )
-        }
-
-        fun setBodyText(body: String) {
-            BodyResponsePane.setBodyJTextArea(body)
-        }
-
-        fun setStatusCode(status: String) {
-            statusCode.text = status
         }
     }
 }

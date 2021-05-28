@@ -5,34 +5,11 @@ import com.intellij.ui.layout.panel
 import services.persistence.RequestPanePersistenceService
 import javax.swing.JComponent
 import javax.swing.JTextArea
-import javax.swing.event.DocumentEvent
-import javax.swing.event.DocumentListener
 
 class BodyRequestPane : RequestTabbedPane, JComponent() {
-    val bodyJTextArea = JTextArea(RequestPanePersistenceService.instance.objState.body)
-    fun bodyUpdate() {
-        bodyJTextArea.document.addDocumentListener(object : DocumentListener {
-
-            override fun insertUpdate(e: DocumentEvent?) {
-                updateState()
-            }
-
-            override fun removeUpdate(e: DocumentEvent?) {
-                updateState()
-            }
-
-            override fun changedUpdate(e: DocumentEvent?) {
-                updateState()
-            }
-
-            private fun updateState() {
-                RequestPanePersistenceService.instance.objState.body = bodyJTextArea.text
-            }
-        })
-    }
+    private val bodyJTextArea = JTextArea(RequestPanePersistenceService.instance.objState.body)
 
     override fun createPanel(): DialogPanel = panel() {
-        bodyUpdate()
         row {
             scrollPane(bodyJTextArea).constraints(pushX)
         }
