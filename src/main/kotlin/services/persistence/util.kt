@@ -1,11 +1,11 @@
 package services.persistence
 
+import services.extensions.setText
 import javax.swing.text.Document
-import javax.swing.text.GapContent
 import javax.swing.text.PlainDocument
 
 internal fun plainDocumentOfGapContent(init: String): Document {
-    val content = GapContent()
-    content.insertString(0, init)
-    return PlainDocument(content)
+    val plainDocument = PlainDocument()
+    plainDocument.setText(init)
+    return plainDocument
 }
