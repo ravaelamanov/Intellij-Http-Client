@@ -9,3 +9,8 @@ internal fun plainDocumentOfGapContent(init: String): Document {
     plainDocument.setText(init)
     return plainDocument
 }
+
+internal val methodsList: List<String> = listOf(
+    "GET", "HEAD", "POST", "PUT",
+    "DELETE", "OPTIONS", "TRACE", "PATCH"
+)
