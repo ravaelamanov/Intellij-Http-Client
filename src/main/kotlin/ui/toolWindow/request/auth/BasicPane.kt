@@ -12,6 +12,7 @@ import javax.swing.JComponent
 import javax.swing.JPasswordField
 import javax.swing.JTextField
 import javax.swing.UIManager
+import javax.swing.border.EmptyBorder
 
 class BasicPane : RequestTabbedPane, JComponent() {
     private val objState = BasicAuthPersistenceService.instance.objState
@@ -45,5 +46,14 @@ class BasicPane : RequestTabbedPane, JComponent() {
         row {
             checkbox().constraints(CCFlags.growY)
         }
+    }.apply {
+        withBorder(
+            EmptyBorder(
+                UIProperties.getProperty("paddingTop").toInt(),
+                UIProperties.getProperty("paddingLeft").toInt(),
+                UIProperties.getProperty("paddingBottom").toInt(),
+                UIProperties.getProperty("paddingRight").toInt()
+            )
+        )
     }
 }

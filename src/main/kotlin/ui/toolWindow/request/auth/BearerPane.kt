@@ -9,6 +9,7 @@ import ui.toolWindow.request.RequestTabbedPane
 import ui.toolWindow.util.UIProperties
 import javax.swing.JComponent
 import javax.swing.JTextField
+import javax.swing.border.EmptyBorder
 
 class BearerPane : RequestTabbedPane, JComponent() {
     private val objState = BearerAuthPersistenceService.instance.objState
@@ -21,5 +22,14 @@ class BearerPane : RequestTabbedPane, JComponent() {
         row("Token:") {
             token().constraints(CCFlags.growY)
         }
+    }.apply {
+        withBorder(
+            EmptyBorder(
+                UIProperties.getProperty("paddingTop").toInt(),
+                UIProperties.getProperty("paddingLeft").toInt(),
+                UIProperties.getProperty("paddingBottom").toInt(),
+                UIProperties.getProperty("paddingRight").toInt()
+            )
+        )
     }
 }
